@@ -16,7 +16,7 @@ class DbSeeder():
         init={
           'title': generator.Name(),
           'author': generator.Name(),
-          'pages_qty': generator.Integer(start=5, end=8),
+          'pages_qty': generator.Integer(start=10, end=150),
           'isbn': ''
         }
       )
