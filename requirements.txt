@@ -1,1 +1,2 @@
 Flask==2.2.2
+Flask-Seeder==1.2.0
