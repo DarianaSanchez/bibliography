@@ -1,11 +1,9 @@
 from flask import Flask, jsonify, Response
 from data.models import Book, BookPage
 
-# from data.handler import DbHandler
-# from data.seeder import DbSeeder
-
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
+
 
 def response_error(message):
     return jsonify({'error': message}), 500
@@ -53,11 +51,3 @@ def get_book_page(book_id, page_number, page_format):
 
 if __name__ == '__main__':
     app.run(debug=True, port=4000)
-
-
-# def main():
-#     DbHandler().setup_db()
-#     DbSeeder.run()
-
-# if __name__ == '__main__':
-#     main()
