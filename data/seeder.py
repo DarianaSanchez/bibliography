@@ -1,6 +1,11 @@
 from flask_seeder import Faker, generator
 from .models import Book, BookPage
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 class DbSeeder():
 
@@ -16,9 +21,7 @@ class DbSeeder():
         }
       )
 
-      # TODO: create as many books as config indicates
-      book_batch = 5
-
-      for book in faker.create(book_batch):
+      books_amount = int(os.getenv('BOOKS_AMOUNT') or 5)
+      for book in faker.create(books_amount):
         new_book_id = book.save_book()
         BookPage.seed_book_pages(new_book_id, book.pages_qty)

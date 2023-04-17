@@ -1,12 +1,18 @@
 import sqlite3
 from sqlite3 import Error
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 class DbHandler():
     
     def __init__(self):
         try:
-            self.connection = sqlite3.connect('database.db')
+            database = os.getenv('DATABASE_FILE')
+            self.connection = sqlite3.connect(database)
         except Error as e:
             print(e)
 

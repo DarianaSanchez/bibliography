@@ -1,2 +1,4 @@
 Flask==2.2.2
 Flask-Seeder==1.2.0
+python-dotenv==1.0.0
+html2text==2020.1.16
