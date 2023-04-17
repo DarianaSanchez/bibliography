@@ -1,5 +1,6 @@
 from .handler import DbHandler
 import functools
+import html2text
 
 
 class Book():
@@ -21,6 +22,38 @@ class Book():
     new_book_id = dbHandler.insert_record(new_book_cmd, book_vals)
 
     return new_book_id
+
+  @classmethod
+  def map_records(self, records):
+    def get_dict(rec):
+      return {
+        'id': rec[0],
+        'title': rec[1],
+        'author': rec[2],
+        'pages_qty': rec[3],
+      } 
+
+    return [get_dict(row) for row in records]
+
+  @classmethod
+  def get_books(self):
+    dbHandler = DbHandler()
+
+    sql_query = 'SELECT id, title, author, pages_qty FROM books'
+    books = dbHandler.get_records(sql_query)
+    return self.map_records(books)
+  
+  @classmethod
+  def get_book_by_id(self, book_id):
+    dbHandler = DbHandler()
+
+    sql_query = f'SELECT id, title, author, pages_qty FROM books WHERE id = {book_id}'
+    books = dbHandler.get_records(sql_query)
+
+    if not len(books):
+      raise Exception(f'Book Id: {book_id} not found')
+
+    return self.map_records(books)
 
 
 class BookPage():
@@ -50,3 +83,27 @@ class BookPage():
     all_book_pages = functools.reduce(lambda x, y: x + y, book_pages_vals)
 
     dbHandler.insert_record(book_pages_cmd, all_book_pages)
+  
+  @classmethod
+  def format_page(self, content):
+    converter = html2text.HTML2Text()
+    converter.ignore_links = True
+    return converter.handle(content)
+
+  @classmethod
+  def get_page_content(self, book_id, page_number, page_format):
+    dbHandler = DbHandler()
+
+    sql_query = f'''SELECT content, format FROM pages 
+                    WHERE book_id = {book_id} AND page_number = {page_number}'''
+    pages = dbHandler.get_records(sql_query)
+
+    if not len(pages):
+      raise Exception(f'Page {page_number} of Book Id: {book_id} not found')
+    
+    (content, format) = pages[0]
+
+    if format != page_format and format == 'html':
+      return self.format_page(content)
+
+    return content

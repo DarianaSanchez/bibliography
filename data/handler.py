@@ -6,7 +6,7 @@ class DbHandler():
     
     def __init__(self):
         try:
-            self.connection = sqlite3.connect('./data/database.db')
+            self.connection = sqlite3.connect('database.db')
         except Error as e:
             print(e)
 
@@ -64,3 +64,14 @@ class DbHandler():
         cursor.execute(sql_command, values)
         self.connection.commit()
         return cursor.lastrowid
+
+    def get_records(self, sql_command):
+        """
+        Gets all record
+        :param sql_command:
+        :return: list of records
+        """
+        cursor = self.connection.cursor()
+        cursor.execute(sql_command)
+        records = cursor.fetchall()
+        return records
