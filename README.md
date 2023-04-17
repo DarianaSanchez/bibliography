@@ -15,7 +15,7 @@ For this first iteration the books will be available (page by page) in plain tex
 
 ## Rules
 - Make use of the language mentioned in the email in which you got this test
-- Do not use any frameworks. A good developer must know how to select his tools and how to use them.
+- Do not use any frameworks. A good developer must know how to select his tools and how to use them. (Exactly! A good developer would figure that not a framework but one of the many Python microframeworks to build rest apis is the lightweight, stable, time-efficient tool this small project requires)
 - The use of third-party libraries is allowed and encouraged.
 - Make use of .gitignore, keep it clean. 
 
