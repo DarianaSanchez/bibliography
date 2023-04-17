@@ -51,6 +51,7 @@ class DbHandler():
                 book_id integer NOT NULL,
                 page_number integer NOT NULL,
                 content text,
+                format text,
                 FOREIGN KEY (book_id) REFERENCES books (id)
             )
             '''

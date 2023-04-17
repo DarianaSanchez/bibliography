@@ -53,7 +53,7 @@ class Book():
     if not len(books):
       raise Exception(f'Book Id: {book_id} not found')
 
-    return self.map_records(books)
+    return self.map_records(books)[0]
 
 
 class BookPage():
